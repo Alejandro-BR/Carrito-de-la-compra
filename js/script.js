@@ -5,20 +5,23 @@ const botonVaciarCarrito = document.querySelector("#vaciar-carrito"); // Boton v
 const listaCursos = document.querySelector("#lista-cursos"); // Array de todos los cursos total 12  //.container
 const carrito = document.querySelector("#lista-carrito") // El contenedor del carrito
 const botonAgregarCarrito = document.querySelectorAll(".agregar-carrito");  // Está dentro del <a> en class </a>
-const cantidades = new Map();
+
 
 
 // Variables
 
-const curso = [];
+let curso = {};
 let carritoProductos = [];
+
+// Actualizar carrito
+//actualizarLocalStorage();
 
 
 // Eventos
 
-listaCursos.addEventListener('click', agregarCurso);
+listaCursos.addEventListener('click', recogerDatosCurso);
+botonVaciarCarrito.addEventListener('click', vaciarCarrito);
 
-// botonVaciarCarrito.addEventListener("click", vaciarCarrito());
 
 // Funciones
 
@@ -33,26 +36,38 @@ function recogerDatosCurso(event) {
       imagenCurso: cursoSeleccionado.children[0].src,
       nombreCurso: cursoSeleccionado.children[1].children[0].textContent,
       precioCurso: cursoSeleccionado.children[1].children[3].children[0].textContent,
-      contador: 0
+      cantidad: 1
     }
 
-    // setcarritoProducto(datosProducto);
-    // crearTrCarrito(datosProducto);
-    console.log(curso);
+    setcarritoProducto(curso);
   }
 }
 
-function setcarritoProducto(curso) {
-  carritoProducto.push(curso);
-  localStorage.setItem("productos", JSON.stringify(carritoProductos))
 
+function setcarritoProducto(curso) {
+
+  let productoExiste = false;
+
+  carritoProductos.forEach(c => {
+    if (c.id == curso.id) {
+      c.cantidad++;
+      productoExiste = true;
+    }
+  })
+
+  if (!productoExiste) {
+    carritoProductos.push(curso);
+  }
+
+  console.log(carritoProductos)
+  localStorage.setItem("carrito", JSON.stringify(carritoProductos));
 }
 
 /**
  * Funcion para vaciar el carrito
  */
 function vaciarCarrito() {
-
+  localStorage.removeItem("carrito");
 }
 
 /**
@@ -62,12 +77,9 @@ function crearTrCarrito(producto) {
 
 }
 
-
 /**
  * Funcion para cuando recargues la página se cargue el LocalStorage
  */
 function actualizarLocalStorage() {
-  JSON.parse(localStorage.getItem("productos"))
+  carritoProductos = JSON.parse(localStorage.getItem("carrito"))
 }
-
-
