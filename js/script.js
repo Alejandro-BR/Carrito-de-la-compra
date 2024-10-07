@@ -35,7 +35,7 @@ function recogerDatosCurso(event) {
       id: cursoSeleccionado.children[1].children[4].getAttribute("data-id"),
       imagenCurso: cursoSeleccionado.children[0].src,
       nombreCurso: cursoSeleccionado.children[1].children[0].textContent,
-      precioCurso: cursoSeleccionado.children[1].children[3].children[0].textContent,
+      precioCurso: cursoSeleccionado.children[1].children[3].children[0].textContext, // Quitar primera posicion
       cantidad: 1
     }
 
@@ -59,8 +59,8 @@ function setcarritoProducto(curso) {
     carritoProductos.push(curso);
   }
 
-  console.log(carritoProductos)
   localStorage.setItem("carrito", JSON.stringify(carritoProductos));
+  crearTrCarrito(carritoProductos);
 }
 
 /**
@@ -73,8 +73,10 @@ function vaciarCarrito() {
 /**
  * funcion para crear un tr para el carrito
  */
-function crearTrCarrito(producto) {
+function crearTrCarrito(carritoProductos) {
+  carritoProductos.forEach(t =>{
 
+  })
 }
 
 /**
