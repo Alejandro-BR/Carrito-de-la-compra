@@ -15,7 +15,7 @@ const botonAgregarCarrito = document.querySelectorAll(".agregar-carrito");  // E
 // Variables
 
 let curso = {}; // Objeto curso
-let carritoProductos = []; // Array con todos los cursos
+let carritoProductos = JSON.parse(localStorage.getItem("carrito")) || [];; // Array con todos los cursos
 
 //actualizarLocalStorage();
 
@@ -44,7 +44,11 @@ function recogerDatosCurso(event) {
   }
 }
 
-
+/**
+ * Funcion para editar el carrito.
+ * 
+ * @param {*} curso 
+ */
 function setcarritoProducto(curso) {
 
   let productoExiste = false;
@@ -74,15 +78,22 @@ function setcarritoProducto(curso) {
 function vaciarCarrito() {
   carritoProductos = [];
   localStorage.removeItem("carrito");
+  // No lo vaicia bien
   crearTrCarrito();
 }
 
 /**
- * funcion para crear un tr para el carrito
+ * Funcion para crear un tr para el carrito
  */
 function crearTrCarrito() {
-  carritoProductos.forEach(t =>{
 
+  actualizarLocalStorage();
+
+  carritoProductos.forEach(c =>{
+    const tr = document.createElement('tr');
+    tr.textContent = c.nombreCurso;
+
+    carrito.appendChild(tr)
   })
 }
 
