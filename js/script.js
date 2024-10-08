@@ -89,11 +89,27 @@ function crearTrCarrito() {
 
   actualizarLocalStorage();
 
-  carritoProductos.forEach(c =>{
-    const tr = document.createElement('tr');
-    tr.textContent = c.nombreCurso;
+  carritoProductos.forEach(c => {
 
-    carrito.appendChild(tr)
+    const table = document.getElementById('lista-carrito');
+    const tr = document.createElement('tr');
+
+    table.children[1].appendChild(tr);
+
+    const th = document.createElement('th');
+    th.textContent = c.nombreCurso;
+
+
+    tr.appendChild(th);
+    // table.children[1].children[0].appendChild(th);
+
+    // tr.createElement('th') = c.nombreCurso;
+
+    // carrito.carrito.children[0].children[1].appendChild(tr);
+
+    // carrito.carrito.children[0].children[1].children[0].appendChild(th);
+
+
   })
 }
 
