@@ -1,4 +1,10 @@
-// Alejandro Barrionuevo Rosado, Fernando Sanchez Lagos, Raquel López, Jose Molina, Pablo
+/**
+ * Alejandro Barrionuevo Rosado
+ * Fernando Sanchez Lagos
+ * Raquel López
+ * Jose Molina
+ * Pablo Ruiz
+ */
 
 // Cargar DOM
 const botonVaciarCarrito = document.querySelector("#vaciar-carrito"); // Boton vaciar carrito
@@ -6,22 +12,17 @@ const listaCursos = document.querySelector("#lista-cursos"); // Array de todos l
 const carrito = document.querySelector("#lista-carrito") // El contenedor del carrito
 const botonAgregarCarrito = document.querySelectorAll(".agregar-carrito");  // Está dentro del <a> en class </a>
 
-
-
 // Variables
 
-let curso = {};
-let carritoProductos = [];
+let curso = {}; // Objeto curso
+let carritoProductos = []; // Array con todos los cursos
 
-// Actualizar carrito
 //actualizarLocalStorage();
-
 
 // Eventos
 
 listaCursos.addEventListener('click', recogerDatosCurso);
 botonVaciarCarrito.addEventListener('click', vaciarCarrito);
-
 
 // Funciones
 
@@ -60,20 +61,26 @@ function setcarritoProducto(curso) {
   }
 
   localStorage.setItem("carrito", JSON.stringify(carritoProductos));
-  crearTrCarrito(carritoProductos);
+  crearTrCarrito();
 }
 
 /**
  * Funcion para vaciar el carrito
+ * 
+ * - Limpia la variable.
+ * - Limpia el localStorage.
+ * - Actualiza el carrito.
  */
 function vaciarCarrito() {
+  carritoProductos = [];
   localStorage.removeItem("carrito");
+  crearTrCarrito();
 }
 
 /**
  * funcion para crear un tr para el carrito
  */
-function crearTrCarrito(carritoProductos) {
+function crearTrCarrito() {
   carritoProductos.forEach(t =>{
 
   })
