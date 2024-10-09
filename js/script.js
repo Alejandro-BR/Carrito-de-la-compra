@@ -11,13 +11,14 @@ const botonVaciarCarrito = document.querySelector("#vaciar-carrito"); // Boton v
 const listaCursos = document.querySelector("#lista-cursos"); // Array de todos los cursos total 12  //.container
 const carrito = document.querySelector("#lista-carrito") // El contenedor del carrito
 const botonAgregarCarrito = document.querySelectorAll(".agregar-carrito");  // Está dentro del <a> en class </a>
+const table = document.getElementById('lista-carrito');
 
 // Variables
-
 let curso = {}; // Objeto curso
 let carritoProductos = JSON.parse(localStorage.getItem("carrito")) || [];; // Array con todos los cursos
 
-//actualizarLocalStorage();
+
+crearTrCarrito();
 
 // Eventos
 
@@ -36,10 +37,10 @@ function recogerDatosCurso(event) {
       id: cursoSeleccionado.children[1].children[4].getAttribute("data-id"),
       imagenCurso: cursoSeleccionado.children[0].src,
       nombreCurso: cursoSeleccionado.children[1].children[0].textContent,
-      precioCurso: cursoSeleccionado.children[1].children[3].children[0].textContext, // Quitar primera posicion
+      precioCurso: parseInt(cursoSeleccionado.children[1].children[3].children[0].textContent.replace("$", "")), // Quitar primera posicion
       cantidad: 1
     }
-
+    console.log(cursoSeleccionado.children[1].children[3].children[0].textContent)
     setcarritoProducto(curso);
   }
 }
@@ -78,7 +79,7 @@ function setcarritoProducto(curso) {
 function vaciarCarrito() {
   carritoProductos = [];
   localStorage.removeItem("carrito");
-  // No lo vaicia bien
+
   crearTrCarrito();
 }
 
@@ -88,28 +89,32 @@ function vaciarCarrito() {
 function crearTrCarrito() {
 
   actualizarLocalStorage();
+  //table.children[1].removeChild();
+  table.children[1].innerHTML = "";
+
 
   carritoProductos.forEach(c => {
-
-    const table = document.getElementById('lista-carrito');
     const tr = document.createElement('tr');
 
+
+
+    let th1 = document.createElement('th');
+    th1.textContent = c.imagenCurso;
+    tr.appendChild(th1);
+
+    let th2 = document.createElement('th');
+    th2.textContent = c.nombreCurso;
+    tr.appendChild(th2);
+
+    let th3 = document.createElement('th');
+    th3.textContent = "$" + c.precioCurso;
+    tr.appendChild(th3);
+
+    let th4 = document.createElement('th');
+    th4.textContent = c.cantidad;
+    tr.appendChild(th4);
+
     table.children[1].appendChild(tr);
-
-    const th = document.createElement('th');
-    th.textContent = c.nombreCurso;
-
-
-    tr.appendChild(th);
-    // table.children[1].children[0].appendChild(th);
-
-    // tr.createElement('th') = c.nombreCurso;
-
-    // carrito.carrito.children[0].children[1].appendChild(tr);
-
-    // carrito.carrito.children[0].children[1].children[0].appendChild(th);
-
-
   })
 }
 
@@ -117,5 +122,5 @@ function crearTrCarrito() {
  * Funcion para cuando recargues la página se cargue el LocalStorage
  */
 function actualizarLocalStorage() {
-  carritoProductos = JSON.parse(localStorage.getItem("carrito"))
+  carritoProductos = JSON.parse(localStorage.getItem("carrito")) || [];
 }
