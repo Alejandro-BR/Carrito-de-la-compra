@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "nombre": "HTML5, CSS3, JavaScript para Principiantes",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso1.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Curso de Comida Vegetariana",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso2.jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Guitarra para Principiantes",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso3.jpg"
+  },
+  {
+    "id": 4,
+    "nombre": "Huerto en tu casa",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso4.jpg"
+  },
+  {
+    "id": 5,
+    "nombre": "Decoración con productos de tu hogar",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso5.jpg"
+  },  
+  {
+    "id": 6,
+    "nombre": "Diseño Web para Principiantes",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso1.jpg"
+  },
+  {
+    "id": 7,
+    "nombre": "Comida Mexicana para principiantes",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso2.jpg"
+  },
+  {
+    "id": 8,
+    "nombre": "Cosecha tus propias frutas y verduras",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso3.jpg"
+  },
+  {
+    "id": 9,
+    "nombre": "Cosecha tus propias frutas y verduras",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso4.jpg"
+  }
+]

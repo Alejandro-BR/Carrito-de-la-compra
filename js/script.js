@@ -113,19 +113,25 @@ function crearTrCarrito() {
     tr.appendChild(th4);
 
     // Crear el enlace para borrar el tweet
-    const x = document.createElement('a');
-    x.textContent = ' X';
+/*     const x = document.createElement('a');
+    x.textContent = 'X';
     x.className = 'borrar-curso';
+    console.log(c.id);
     x.id = c.id;
-    tr.appendChild(document.createElement('th').appendChild(x));
+    tr.appendChild(document.createElement('th').appendChild(x)); */
+
+    const th5 = document.createElement("th");
+    th5.innerHTML= `<a class="borrar-curso" id=${c.id}>X</a>`
+    tr.appendChild(th5);
+    
 
     table.children[1].appendChild(tr);
   })
 }
 
 function borrarCurso(event) {
-  if (event.target == document.querySelector("a")) {
-    console.log("Borrar");
+  console.log(event.target)
+  if (event.target.classList.contains("borrar-curso")) {
     carritoProductos = carritoProductos.filter(c => c.id !== event.target.id);
     localStorage.setItem("carrito", JSON.stringify(carritoProductos));
     crearTrCarrito();
