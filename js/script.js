@@ -17,13 +17,14 @@ const table = document.getElementById('lista-carrito');
 let curso = {}; // Objeto curso
 let carritoProductos = JSON.parse(localStorage.getItem("carrito")) || [];; // Array con todos los cursos
 
-
+// Actualiza la pagina cuando entramos
 crearTrCarrito();
 
 // Eventos
 
 listaCursos.addEventListener('click', recogerDatosCurso);
 botonVaciarCarrito.addEventListener('click', vaciarCarrito);
+table.addEventListener('click', borrarCurso);
 
 // Funciones
 
@@ -40,7 +41,6 @@ function recogerDatosCurso(event) {
       precioCurso: parseInt(cursoSeleccionado.children[1].children[3].children[0].textContent.replace("$", "")), // Quitar primera posicion
       cantidad: 1
     }
-    console.log(cursoSeleccionado.children[1].children[3].children[0].textContent)
     setcarritoProducto(curso);
   }
 }
@@ -89,17 +89,15 @@ function vaciarCarrito() {
 function crearTrCarrito() {
 
   actualizarLocalStorage();
-  //table.children[1].removeChild();
   table.children[1].innerHTML = "";
-
 
   carritoProductos.forEach(c => {
     const tr = document.createElement('tr');
 
-
-
     let th1 = document.createElement('th');
-    th1.textContent = c.imagenCurso;
+    let img = document.createElement('img');
+    img.setAttribute('src', c.imagenCurso);
+    th1.appendChild(img);
     tr.appendChild(th1);
 
     let th2 = document.createElement('th');
@@ -114,8 +112,24 @@ function crearTrCarrito() {
     th4.textContent = c.cantidad;
     tr.appendChild(th4);
 
+    // Crear el enlace para borrar el tweet
+    const x = document.createElement('a');
+    x.textContent = ' X';
+    x.className = 'borrar-curso';
+    x.id = c.id;
+    tr.appendChild(document.createElement('th').appendChild(x));
+
     table.children[1].appendChild(tr);
   })
+}
+
+function borrarCurso(event) {
+  if (event.target == document.querySelector("a")) {
+    console.log("Borrar");
+    carritoProductos = carritoProductos.filter(c => c.id !== event.target.id);
+    localStorage.setItem("carrito", JSON.stringify(carritoProductos));
+    crearTrCarrito();
+  }
 }
 
 /**
