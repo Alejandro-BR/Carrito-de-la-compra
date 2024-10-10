@@ -61,5 +61,27 @@
     "autor": "Juan Pedro",
     "precio": "$15",
     "url": "/img/curso4.jpg"
+  },
+  {
+    "id": 10,
+    "nombre": "Prepara galletas caseras",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso5.jpg"
+  },
+  {
+    "id": 11,
+    "nombre": "JavaScript Moderno con ES6",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso1.jpg"
+  },
+  {
+    "id": 12,
+    "nombre": "100 recetas de comida natural",
+    "autor": "Juan Pedro",
+    "precio": "$15",
+    "url": "/img/curso2.jpg"
   }
+  
 ]
