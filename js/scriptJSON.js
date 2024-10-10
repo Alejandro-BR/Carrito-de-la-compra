@@ -155,3 +155,9 @@ function actualizarVariableConLocalStorage() {
 function actualizarLocalStorage() {
   localStorage.setItem("carrito", JSON.stringify(carritoProductos));
 }
+
+
+async function getCatalogo() {
+  let response = await ('data/data.json');
+  return response;
+}
