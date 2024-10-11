@@ -6,17 +6,23 @@
  * Pablo Ruiz
  */
 
-// Cargar DOM
+////// Cargar DOM
 const botonVaciarCarrito = document.querySelector("#vaciar-carrito");
 const listaCursos = document.querySelector("#lista-cursos");
 const carrito = document.querySelector("#lista-carrito");
 const botonAgregarCarrito = document.querySelectorAll(".agregar-carrito");
 const table = document.getElementById('lista-carrito');
 
-// Variables
+////// Variables
 let curso = {};
 let carritoProductos;
 
+/**
+ * Inicia la pagina web cargando datos y configuraciones necesarias.
+ * Actualiza variables desde el almacenamiento local, obtiene el catalogo de productos
+ * y muestra las tarjetas correspondientes. Y contenido inicial del carrito de compras en HTML.
+ * 
+ */
 async function init() {
   actualizarVariableConLocalStorage();
   const data = await getCatalogo();
@@ -24,20 +30,26 @@ async function init() {
   crearHtmlCarrito();
 }
 
+// Llamamos a la funcion que inicia la pagina.
 init();
 
-// Eventos
+////// Eventos
 listaCursos.addEventListener('click', recogerDatosCurso);
 botonVaciarCarrito.addEventListener('click', vaciarCarrito);
 table.addEventListener('click', borrarCurso);
 
-// Funciones
+////// Funciones
 
 /**
- * Funcion para recoger datos al hacer click en el boton "agregar carrito"
+ * Recoge los datos de un curso seleccionado.
+ * Extrae la informacion del curso.
+ * Y envia ese objeto al carrito de compras.
+ *
+ * @param {Event} event
+ * 
  */
 function recogerDatosCurso(event) {
-  event.preventDefault();
+  event.preventDefault(); // Evitar que la pagina se recargue
   if (event.target.classList.contains("agregar-carrito")) {
     let cursoSeleccionado = event.target.parentElement.parentElement;
     curso = {
@@ -47,30 +59,33 @@ function recogerDatosCurso(event) {
       precioCurso: parseInt(cursoSeleccionado.children[1].children[3].children[0].textContent.replace("$", "")),
       cantidad: 1
     }
-    setcarritoProducto(curso);
+    setCarritoProducto(curso);
   }
 }
 
 /**
- * Funcion para agregar un producto al carrito
+ * Agrega un curso al carrito de compras. 
+ * - Si el curso ya existe en el carrito, incrementa la cantidad.
+ * - Si no, lo agrega como un nuevo producto.
+ *
+ * @param {Object} curso 
  * 
- * @param {*} curso 
  */
-function setcarritoProducto(curso) {
-
+function setCarritoProducto(curso) {
   let productoExiste = false;
-
+  // Usamos forEach para verificar si el producto ya esta en el carrito
   carritoProductos.forEach(c => {
     if (c.id == curso.id) {
+      // Si esta aumentamos la cantidad
       c.cantidad++;
       productoExiste = true;
     }
   })
-
+  // Si el producto no existe, lo agregamos
   if (!productoExiste) {
     carritoProductos.push(curso);
   }
-
+  // Actualizamos el localStorage y la vista del carrito
   actualizarLocalStorage();
   crearHtmlCarrito();
 }
@@ -83,23 +98,31 @@ function setcarritoProducto(curso) {
  * - Actualiza el carrito.
  */
 function vaciarCarrito() {
+  // Reinicia la variable
   carritoProductos = [];
+  // Elimina el localStorage 
   localStorage.removeItem("carrito");
+  // Actualizar el carrito
   crearHtmlCarrito();
 }
 
 /**
- * Funcion para crear un tr para el carrito
+ * Crea y actualiza el contenido del carrito en el HTML.
+ * 
+ * - Recupera los productos del carrito almacenados en el localStorage.
+ * - Limpia el contenido del carrito en la tabla HTML.
+ * - Genera una fila por cada producto en el carrito, mostrando su imagen, nombre, precio, cantidad y un botón para eliminarlo.
  */
 function crearHtmlCarrito() {
 
-  actualizarVariableConLocalStorage();
+  actualizarVariableConLocalStorage(); //Actualiza el localStorage
   const tbody = table.querySelector("tbody");
   tbody.innerHTML = "";
 
+  // Recorre el array que contiene todos los productos agregados al carrito.
   carritoProductos.forEach(curso => {
     const tr = document.createElement('tr');
-
+    // Crea una fila para cada producto
     tr.innerHTML = `
       <th><img src="${curso.imagenCurso}" width="100"></th>
       <th>${curso.nombreCurso}</th>
@@ -107,14 +130,12 @@ function crearHtmlCarrito() {
       <th>${curso.cantidad}</th>
       <th><a href="#" class="borrar-curso" id="${curso.id}">X</a></th>
     `;
-
     tbody.appendChild(tr);
   })
 }
 
-
 /**
- * Función para borrar un curso.
+ * Borrar un curso seleccionado en el carrito.
  * 
  * @param {*} event 
  */
@@ -131,23 +152,25 @@ function borrarCurso(event) {
 }
 
 /**
- * Funcion para actualizar la variable
+ * Actualiza la variable "carritoProductos".
  */
 function actualizarVariableConLocalStorage() {
   carritoProductos = JSON.parse(localStorage.getItem("carrito")) || [];
 }
 
 /**
- * Funcion para actualizar el local storage
+ * Actualiza el local storage.
  */
 function actualizarLocalStorage() {
   localStorage.setItem("carrito", JSON.stringify(carritoProductos));
 }
 
 /**
- * Obtener el json
+ * Obtiene el catalogo de cursos desde un archivo JSON.
  * 
- * @returns data o error
+ * - Fichero: "data/data.json"
+ * 
+ * @returns {Promise<Object|undefined>} - datos del catalogo en formato JSON
  */
 async function getCatalogo() {
   let response;
@@ -156,24 +179,28 @@ async function getCatalogo() {
     response = await fetch('data/data.json');
     // Convierte la respuesta a JSON
     let data = await response.json();
-    return data;
+    return data; // Devuelve los datos del catalogo en formato JSON
   } catch (error) {
-    console.error('Error al obtener el catálogo:', error);
+    console.error('Error al obtener el catalogo:', error);
   }
   return response;
 }
 
 /**
- * Crear el html
- * Dibujar CARDS de cursos(en grupos de 3), POR CADA ROW 3 CARD
- * @param {Array} data 
+ * Crea el HTML dinamicamente para mostrar los cursos en forma de tarjetas.
+ * 
+ * @param {Array} data - Array[objetos]
+ * 
  */
 function mostrarCard(data) {
+  // Itera en bloques de 3 elementos
   for (let i = 0; i < data.length; i += 3) {
+    // Crea un nuevo div para cada fila de 3 tarjetas
     const divRow = document.createElement('div');
     divRow.classList.add('row');
 
     for (let j = 0; j < 3; j++) {
+      // Solo crea la tarjeta si el elemento 'data[i + j]' no es null
       if (!(data[i + j] == null)) {
         const div = document.createElement('div');
         div.classList.add('four', 'columns');
@@ -197,9 +224,11 @@ function mostrarCard(data) {
                     </div>
                   </div>
           `;
+        // Añade el div de la tarjeta a la fila
         divRow.appendChild(div);
       }
     }
+    // Añade la fila completa al contenedor 'listaCursos'
     listaCursos.appendChild(divRow);
   }
 }
