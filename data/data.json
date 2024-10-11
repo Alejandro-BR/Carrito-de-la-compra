@@ -82,6 +82,19 @@
     "autor": "Juan Pedro",
     "precio": "$15",
     "url": "/img/curso2.jpg"
+  },
+  {
+    "id": 13,
+    "nombre": "Curso figma 180 horas patrocinado por Vhyper Games",
+    "autor": "Equipo",
+    "precio": "$15",
+    "url": "/img/logovg.png"
+  }, {
+    "id": 14,
+    "nombre": "Curso de js para hacer un carrito",
+    "autor": "Equipo",
+    "precio": "$15",
+    "url": "/img/logovg.png"
   }
   
 ]

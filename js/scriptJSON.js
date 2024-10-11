@@ -165,73 +165,41 @@ async function getCatalogo() {
 
 /**
  * Crear el html
- * 
+ * Dibujar CARDS de cursos(en grupos de 3), POR CADA ROW 3 CARD
  * @param {Array} data 
  */
 function mostrarCard(data) {
-
-  // for (let i = 0; i < data.length; i += 3) {
-  //   const div = document.createElement('div');
-  //   div.classList.add('row');
-
-  //   data.forEach(c => {
-  //     const div = document.createElement('div');
-  //     div.classList.add('row');
-  //     div.innerHTML = `
-  //         <div class="four columns">
-  //           <div class="card">
-  //               <img src="${c.url}" class="imagen-curso u-full-width" />
-  //               <div class="info-card">
-  //                 <h4>${c.nombre}</h4>
-  //                 <p>${c.autor}$</p>
-  //                 <img src="img/estrellas.png" />
-  //                 <p class="precio">
-  //                   $200
-  //                   <span class="u-pull-right">${c.precio}</span>
-  //                 </p>
-  //                 <a
-  //                   href="#"
-  //                   class="u-full-width button-primary button input agregar-carrito"
-  //                   data-id="${c.id}"
-  //                   >Agregar Al Carrito</a
-  //                 >
-  //               </div>
-  //             </div>
-  //         </div>
-  //     `;
-  //     listaCursos.appendChild(div);
-  //   });
-
-  // }
   for (let i = 0; i < data.length; i += 3) {
     const divRow = document.createElement('div');
     divRow.classList.add('row');
 
-    for (let j = 0; j < data.length; j++) {
-      const div = document.createElement('div');
-      div.classList.add('four columns');
-      div.innerHTML = `
+    for (let j = 0; j < 3; j++) {
+      if (!(data[i + j] == null)) {
+        const div = document.createElement('div');
+        div.classList.add('four', 'columns');
+        div.innerHTML = `
                 <div class="card">
-                    <img src="${data[j].url}" class="imagen-curso u-full-width" />
+                    <img src="${data[i + j].url}" class="imagen-curso u-full-width" />
                     <div class="info-card">
-                      <h4>${data[j].nombre}</h4>
-                      <p>${data[j].autor}$</p>
+                      <h4>${data[i + j].nombre}</h4>
+                      <p>${data[i + j].autor}</p>
                       <img src="img/estrellas.png" />
                       <p class="precio">
                         $200
-                        <span class="u-pull-right">${data[j].precio}</span>
+                        <span class="u-pull-right">${data[i + j].precio}</span>
                       </p>
                       <a
                         href="#"
                         class="u-full-width button-primary button input agregar-carrito"
-                        data-id="${data[j].id}"
+                        data-id="${data[i + j].id}"
                         >Agregar Al Carrito</a
                       >
                     </div>
                   </div>
           `;
+        divRow.appendChild(div);
+      }
     }
-    divRow.appendChild(div);
+    listaCursos.appendChild(divRow);
   }
-  listaCursos.appendChild(divRow);
 }
