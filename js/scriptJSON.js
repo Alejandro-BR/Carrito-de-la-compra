@@ -14,7 +14,6 @@ const botonAgregarCarrito = document.querySelectorAll(".agregar-carrito");
 const table = document.getElementById('lista-carrito');
 
 ////// Variables
-let curso = {};
 let carritoProductos;
 
 /**
@@ -52,7 +51,7 @@ function recogerDatosCurso(event) {
   event.preventDefault(); // Evitar que la pagina se recargue
   if (event.target.classList.contains("agregar-carrito")) {
     let cursoSeleccionado = event.target.parentElement.parentElement;
-    curso = {
+    let curso = {
       id: cursoSeleccionado.children[1].children[4].getAttribute("data-id"),
       imagenCurso: cursoSeleccionado.children[0].src,
       nombreCurso: cursoSeleccionado.children[1].children[0].textContent,
@@ -170,20 +169,19 @@ function actualizarLocalStorage() {
  * 
  * - Fichero: "data/data.json"
  * 
- * @returns {Promise<Object|undefined>} - datos del catalogo en formato JSON
+ * @returns {Promise<Object>} - datos del catalogo en formato JSON
  */
 async function getCatalogo() {
-  let response;
   try {
     // Usa fetch para obtener el archivo JSON
-    response = await fetch('data/data.json');
+    const response = await fetch('data/data.json');
     // Convierte la respuesta a JSON
-    let data = await response.json();
+    const data = await response.json();
     return data; // Devuelve los datos del catalogo en formato JSON
   } catch (error) {
-    console.error('Error al obtener el catalogo:', error);
+    console.error('Error al obtener el catalogo: ', error);
+    return {};
   }
-  return response;
 }
 
 /**
@@ -201,7 +199,7 @@ function mostrarCard(data) {
 
     for (let j = 0; j < 3; j++) {
       // Solo crea la tarjeta si el elemento 'data[i + j]' no es null
-      if (!(data[i + j] == null)) {
+      if (data[i + j] != null) {
         const div = document.createElement('div');
         div.classList.add('four', 'columns');
         div.innerHTML = `
